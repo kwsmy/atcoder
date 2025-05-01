@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+output="${1:-0}"
+script -q -I "${output}.tmp" -c "./a.out"
+
+sed -i '
+  /^Script started/d
+  /^Script done/d
+  /^$/d
+  s/\r//g
+' "${output}.tmp"
+
+mv "${output}.tmp" "${output}"

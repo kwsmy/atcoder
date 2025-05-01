@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+config_root="$(git rev-parse --show-toplevel)"
+opts="$(yq '.CompileFlags.Add[]' <"${config_root}"/.clangd | xargs)"
+
+g++ ${opts} "${1}.cpp"
